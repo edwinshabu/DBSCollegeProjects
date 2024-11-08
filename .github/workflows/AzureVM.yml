@@ -28,7 +28,7 @@ jobs:
 
       - name: Set Location
         run: |
-          sudo snap install terraform
+          sudo snap install terraform --classic
           cd Terraform_Scripts
           ls
           pwd
