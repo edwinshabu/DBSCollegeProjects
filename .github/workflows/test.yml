@@ -1,0 +1,22 @@
+name: Terraform Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform-deploy:
+    runs-on: self-hosted
+
+    steps:
+      # Step 1: Check out the latest code
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+
+      # Step 3: Authenticate with Azure using email and password
+      - name: Azure CLI Login with Email and Password
+        env:
+          AZURE_USERNAME: ${{ secrets.AZURE_EMAIL }}
+          AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
+        run: |
+          publicIP=$(terraform output -json | jq -r '.public_ip_address.value')
