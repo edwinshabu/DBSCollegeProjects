@@ -21,7 +21,7 @@ jobs:
           terraform init -upgrade
           terraform plan -out main.tfplan
           terraform apply main.tfplan
-          $json = terraform.exe output -json
+          $json = terraform output -json
           $jsonObject = $json | ConvertFrom-Json
           $publicIP = $jsonObject.public_ip_address.value
           $username = "azureadmin"
