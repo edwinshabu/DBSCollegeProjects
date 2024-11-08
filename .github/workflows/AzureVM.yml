@@ -32,6 +32,8 @@ jobs:
       - name: Set Azure Subscription
         run: az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
 
+      - name: Set Location
+        run: cd Terraform_Scripts
       # Step 5: Initialize Terraform
       - name: Terraform Init
         run: terraform init
