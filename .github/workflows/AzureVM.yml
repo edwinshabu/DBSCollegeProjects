@@ -12,11 +12,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Step 2: Install Terraform
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.9.8  # Specify your preferred version
+
 
       # Step 3: Authenticate with Azure using email and password
       - name: Azure CLI Login with Email and Password
@@ -32,13 +28,14 @@ jobs:
 
       - name: Set Location
         run: |
+          apt install terraform
           cd Terraform_Scripts
           ls
           pwd
 
       # Step 5: Initialize Terraform
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -upgrade
 
       # Step 6: Plan Terraform changes
       - name: Terraform Plan
