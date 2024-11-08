@@ -16,7 +16,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7  # Specify your preferred version
+          terraform_version: 1.9.8  # Specify your preferred version
 
       # Step 3: Authenticate with Azure using email and password
       - name: Azure CLI Login with Email and Password
@@ -25,8 +25,6 @@ jobs:
           AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
         run: |
           az login -u 20027520@mydbs.ie -p qN0*HfcP
-          ls
-          pwd
 
       # Step 4: Set Azure Subscription
       - name: Set Azure Subscription
