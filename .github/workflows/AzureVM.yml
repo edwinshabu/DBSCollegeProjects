@@ -12,11 +12,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Step 2: Install Terraform
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.9.8
 
       # Step 3: Authenticate with Azure using email and password
       - name: Azure CLI Login with Email and Password
@@ -24,8 +19,6 @@ jobs:
           AZURE_USERNAME: ${{ secrets.AZURE_EMAIL }}
           AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
         run: |
-          az login -u 20027520@mydbs.ie -p qN0*HfcP
-          az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
           cd Terraform_Scripts
           terraform init -upgrade
           terraform plan -out main.tfplan
