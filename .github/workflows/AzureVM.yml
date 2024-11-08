@@ -12,7 +12,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-
+      # Step 2: Install Terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.9.8
 
       # Step 3: Authenticate with Azure using email and password
       - name: Azure CLI Login with Email and Password
@@ -26,21 +30,20 @@ jobs:
       - name: Set Azure Subscription
         run: az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
 
-      - name: Set Location
-        run: |
-          sudo snap install terraform --classic
-          cd Terraform_Scripts
-          ls
-          pwd
-
       # Step 5: Initialize Terraform
       - name: Terraform Init
-        run: terraform init -upgrade
+        run: |
+          cd Terraform_Scripts
+          terraform init -upgrade
 
       # Step 6: Plan Terraform changes
       - name: Terraform Plan
-        run: terraform plan -out main.tfplan
+        run: |
+          cd Terraform_Scripts
+          terraform plan -out main.tfplan
 
       # Step 7: Apply Terraform plan
       - name: Terraform Apply
-        run: terraform apply main.tfplan
+        run: |
+          cd Terraform_Scripts
+          terraform apply main.tfplan
