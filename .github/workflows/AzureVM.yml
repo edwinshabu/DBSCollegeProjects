@@ -25,6 +25,8 @@ jobs:
           AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
         run: |
           az login -u 20027520@mydbs.ie -p qN0*HfcP
+          ls
+          pwd
 
       # Step 4: Set Azure Subscription
       - name: Set Azure Subscription
