@@ -25,25 +25,8 @@ jobs:
           AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
         run: |
           az login -u 20027520@mydbs.ie -p qN0*HfcP
-
-      # Step 4: Set Azure Subscription
-      - name: Set Azure Subscription
-        run: az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
-
-      # Step 5: Initialize Terraform
-      - name: Terraform Init
-        run: |
+          az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
           cd Terraform_Scripts
           terraform init -upgrade
-
-      # Step 6: Plan Terraform changes
-      - name: Terraform Plan
-        run: |
-          cd Terraform_Scripts
           terraform plan -out main.tfplan
-
-      # Step 7: Apply Terraform plan
-      - name: Terraform Apply
-        run: |
-          cd Terraform_Scripts
           terraform apply main.tfplan
