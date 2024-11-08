@@ -1,0 +1,43 @@
+name: Terraform Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the latest code
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install Terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7  # Specify your preferred version
+
+      # Step 3: Authenticate with Azure using email and password
+      - name: Azure CLI Login with Email and Password
+        env:
+          AZURE_USERNAME: ${{ secrets.AZURE_EMAIL }}
+          AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
+        run: |
+          az login -u 20027520@mydbs.ie -p qN0*HfcP
+
+      # Step 4: Set Azure Subscription
+      - name: Set Azure Subscription
+        run: az account set --subscription "99afca3a-8b0b-4afb-9bbc-7172d25132fb"
+
+      # Step 5: Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 6: Plan Terraform changes
+      - name: Terraform Plan
+        run: terraform plan -out main.tfplan
+
+      # Step 7: Apply Terraform plan
+      - name: Terraform Apply
+        run: terraform apply main.tfplan
