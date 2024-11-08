@@ -28,7 +28,7 @@ jobs:
 
       - name: Set Location
         run: |
-          sudo apt install terraform -y
+          sudo snap install terraform -y
           cd Terraform_Scripts
           ls
           pwd
