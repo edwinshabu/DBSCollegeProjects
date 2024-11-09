@@ -23,7 +23,8 @@ jobs:
           # terraform apply main.tfplan
           $json = terraform output -json
           $jsonObject = $json | ConvertFrom-Json
-          $publicIP = $jsonObject.public_ip_address.value
+          # $publicIP = $jsonObject.public_ip_address.value
+          $publicIP = "20.49.23.210"
           $username = "azureadmin"
           $password = "Dbs@1234567"
           $keyPath = "~/.ssh/id_rsa"
