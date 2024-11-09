@@ -22,7 +22,7 @@
 
     - name: Run Docker container from loaded image
       ansible.builtin.shell: |
-        sudo docker run -d --restart=always -p 8080:8080 automation_app:latest
+        sudo docker run -d -p 80:80 automation_app
       args:
         creates: /var/run/docker.sock  # Only runs if Docker is installed
 
