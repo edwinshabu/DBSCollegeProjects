@@ -8,9 +8,6 @@
         src: ./automation_app.tar              # Path to image on your local machine
         dest: /home/azureadmin/automation_app.tar
         mode: 0644
-    - name: Remove Docker image file after loading
-      ansible.builtin.shell: |
-        sudo dockerd
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
