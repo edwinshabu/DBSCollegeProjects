@@ -71,6 +71,10 @@ jobs:
           cd ..
           cd HelloWorld
           docker build -t automation_app:latest .
+          docker save -o automation_app.tar automation_app:latest
+          scp ./automation_app.tar $username@$publicIP:/home/$publicIP/automation_app.tar
+          
+
           
           
 
