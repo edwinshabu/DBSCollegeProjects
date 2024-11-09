@@ -18,9 +18,9 @@ jobs:
         shell: pwsh
         run: |
           cd Terraform_Scripts
-          terraform init -upgrade
-          terraform plan -out main.tfplan
-          terraform apply main.tfplan
+          # terraform init -upgrade
+          # terraform plan -out main.tfplan
+          # terraform apply main.tfplan
           $json = terraform output -json
           $jsonObject = $json | ConvertFrom-Json
           $publicIP = $jsonObject.public_ip_address.value
@@ -44,7 +44,7 @@ jobs:
               $remoteAuthorizedKeysPath = "/home/$username/.ssh/authorized_keys"
           
               # Ensure the .ssh directory exists on the remote machine
-              Invoke-SSHCommand -SessionId $session.SessionId -Command "mkdir -p /home/$username/.ssh"
+              Invoke-SSHCommand -SessionId $session.SessionId -Command "mkdir -p /home/azureadmin/.ssh"
           
               # Add the public key to the remote VM's authorized_keys file
               Invoke-SSHCommand -SessionId $session.SessionId -Command "echo '$publicKeyContent' >> $remoteAuthorizedKeysPath"
