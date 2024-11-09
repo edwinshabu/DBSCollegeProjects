@@ -5,8 +5,8 @@
   tasks:
     - name: Copy Docker image to Azure VM
       copy:
-        src: ./my_image.tar              # Path to image on your local machine
-        dest: /home/azureadmin/my_image.tar
+        src: ./automation_app.tar              # Path to image on your local machine
+        dest: /home/azureadmin/automation_app.tar
         mode: 0644
     - name: Remove Docker image file after loading
       ansible.builtin.shell: |
@@ -14,13 +14,13 @@
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
-        sudo docker load -i /home/azureadmin/my_image.tar
+        sudo docker load -i /home/azureadmin/automation_app.tar
       args:
-        creates: /home/azureadmin/my_image.tar
+        creates: /home/azureadmin/automation_app.tar
 
     - name: Remove Docker image file after loading
       ansible.builtin.file:
-        path: /home/azureadmin/my_image.tar
+        path: /home/azureadmin/automation_app.tar
         state: absent
 
     - name: Run Docker container from loaded image
