@@ -17,6 +17,8 @@ jobs:
       - name: Azure CLI Login with Email and Password
         shell: pwsh
         run: |
+          Install-Module -Name Posh-SSH -Force -AllowClobber
+          Import-Module Posh-SSH
           cd Terraform_Scripts
           # terraform init -upgrade
           # terraform plan -out main.tfplan
@@ -67,7 +69,7 @@ jobs:
               cd ..
               cd Install_App_VM_Ansible
               sudo docker save -o automation_app.tar automation_app
-              Set-SCPFile -SessionId $session.SessionId -LocalFile "./automation_app.tar" -RemotePath "/home/azureadmin/"
+              New-SCPFile -SessionId $session.SessionId -LocalFile "./automation_app.tar" -RemotePath "/home/azureadmin/"
               $inventoryContent = "[azure_vm]`r`n$publicIP ansible_user=$username ansible_password=`"$password`" ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'`r`n"
               Set-Content -Path "inventory.ini" -Value $inventoryContent
               sudo ansible-playbook -i inventory.ini deploy_docker_image.yml
