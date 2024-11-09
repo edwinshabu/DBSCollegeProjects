@@ -73,6 +73,9 @@ jobs:
           docker build -t automation_app:latest .
           docker save -o automation_app.tar automation_app:latest
           scp ./automation_app.tar $username@$publicIP":"/home/$publicIP/automation_app.tar
+          ssh $username@$publicIP "cd /home/$publicIP/automation_app.tar && docker load -i automation_app.tar"
+          ssh $username@$publicIP "docker run -p 8080:8080 hello-world"
+
           
 
           
