@@ -5,7 +5,7 @@
   tasks:
     - name: Copy Docker image to Azure VM
       ansible.builtin.copy:
-        src: ./automation_app.tar  # Replace with the absolute path in the workflow
+        src: automation_app.tar  # Replace with the absolute path in the workflow
         dest: /home/azureadmin/automation_app.tar
         mode: '0644'
 
