@@ -11,14 +11,11 @@
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
+        ls
+        pwd
         sudo docker load -i /home/azureadmin/automation_app.tar
       args:
         creates: /home/azureadmin/automation_app.tar
-
-    - name: Remove Docker image file after loading
-      ansible.builtin.file:
-        path: /home/azureadmin/automation_app.tar
-        state: absent
 
     - name: Run Docker container from loaded image
       ansible.builtin.shell: |
@@ -33,3 +30,8 @@
     - name: Display running Docker containers
       debug:
         msg: "{{ docker_ps_output.stdout }}"
+        
+    - name: Remove Docker image file after loading
+      ansible.builtin.file:
+        path: /home/azureadmin/automation_app.tar
+        state: absent
