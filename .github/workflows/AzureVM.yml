@@ -20,13 +20,13 @@ jobs:
           Install-Module -Name Posh-SSH -Force -AllowClobber
           Import-Module Posh-SSH
           cd Terraform_Scripts
-          # terraform init -upgrade
-          # terraform plan -out main.tfplan
-          # terraform apply main.tfplan
+          terraform init -upgrade
+          terraform plan -out main.tfplan
+          terraform apply main.tfplan
           $json = terraform output -json
           $jsonObject = $json | ConvertFrom-Json
-          # $publicIP = $jsonObject.public_ip_address.value
-          $publicIP = "20.49.23.210"
+          $publicIP = $jsonObject.public_ip_address.value
+          #$publicIP = "20.49.23.210"
           $username = "azureadmin"
           $password = "Dbs@1234567"
           $keyPath = "~/.ssh/id_rsa"
@@ -34,7 +34,7 @@ jobs:
           if (-not (Test-Path $keyPath)) 
           {
               Write-Host "Generating SSH key..."
-              ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N '' -v
+              yes | ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
           }
           $publicKeyContent = Get-Content $publicKeyPath
           $passwordSecure = ConvertTo-SecureString -AsPlainText -String $password -Force
