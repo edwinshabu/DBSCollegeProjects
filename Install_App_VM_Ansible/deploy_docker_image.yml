@@ -1,0 +1,38 @@
+---
+- name: Deploy Docker image to Azure VM
+  hosts: azure_vm
+  become: yes
+  tasks:
+    - name: Copy Docker image to Azure VM
+      copy:
+        src: ./my_image.tar              # Path to image on your local machine
+        dest: /home/azureadmin/my_image.tar
+        mode: 0644
+    - name: Remove Docker image file after loading
+      ansible.builtin.shell: |
+        sudo dockerd
+
+    - name: Load Docker image on Azure VM
+      ansible.builtin.shell: |
+        sudo docker load -i /home/azureadmin/my_image.tar
+      args:
+        creates: /home/azureadmin/my_image.tar
+
+    - name: Remove Docker image file after loading
+      ansible.builtin.file:
+        path: /home/azureadmin/my_image.tar
+        state: absent
+
+    - name: Run Docker container from loaded image
+      ansible.builtin.shell: |
+        sudo docker run --publish 8080:8080 hello-world:latest
+      args:
+        creates: /var/run/docker.sock  # Only runs if Docker is installed
+
+    - name: Confirm Docker container is running
+      ansible.builtin.shell: docker ps
+      register: docker_ps_output
+
+    - name: Display running Docker containers
+      debug:
+        msg: "{{ docker_ps_output.stdout }}"
