@@ -11,7 +11,7 @@
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
-        docker load -i /home/azureadmin/automation_app.tar
+        sudo docker load -i /home/azureadmin/automation_app.tar
       args:
         creates: /home/azureadmin/automation_app.tar
 
