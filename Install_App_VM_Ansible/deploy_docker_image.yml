@@ -5,7 +5,7 @@
   tasks:
     - name: Copy the .tar file to the remote server
       copy:
-        src: /automation_app.tar  # Relative path to the .tar file in the 'test' folder
+        src: automation_app.tar  # Relative path to the .tar file in the 'test' folder
         dest: /home/azureadmin/automation_app.tar  # Destination path on the remote server
         mode: '0644'  # Permissions for the remote file (optional)
 
