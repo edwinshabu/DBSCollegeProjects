@@ -5,14 +5,12 @@
   tasks:
     - name: Copy Docker image to Azure VM
       copy:
-        src: ./Install_App_VM_Ansible/automation_app.tar              # Path to image on your local machine
+        src: automation_app.tar              # Path to image on your local machine
         dest: /home/azureadmin/automation_app.tar
         mode: 0644
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
-        ls
-        pwd
         sudo docker load -i /home/azureadmin/automation_app.tar
       args:
         creates: /home/azureadmin/automation_app.tar
