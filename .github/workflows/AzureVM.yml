@@ -75,6 +75,7 @@ jobs:
           cd ..
           cd Install_App_VM_Ansible
           sudo docker save -o automation_app.tar automation_app
+          sudo dd if=automation_app.tar | ssh $usernam@$publicIP "dd of=/home/azureadmin/automation_app.tar"
           $inventoryContent = "[azure_vm]`r`n$publicIP ansible_user=$username ansible_password=`"$password`" ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'`r`n"
           Set-Content -Path "inventory.ini" -Value $inventoryContent
           sudo ansible-playbook -i inventory.ini deploy_docker_image.yml
