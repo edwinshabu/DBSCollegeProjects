@@ -71,10 +71,10 @@ jobs:
 
           cd ..
           cd HelloWorld
-          docker build -t automation_app:latest .
+          sudo docker build -t automation_app:latest .
           cd ..
           cd Install_App_VM_Ansible
-          docker save -o automation_app.tar automation_app:latest
+          sudo docker save -o automation_app.tar automation_app:latest
           $inventoryContent = "[azure_vm]`r`n$publicIP ansible_user=$username ansible_password=`"$password`" ansible_connection=ssh ansible_ssh_common_args='-o StrictHostKeyChecking=no'`r`n"
           Set-Content -Path "inventory.ini" -Value $inventoryContent
           sudo ansible-playbook -i inventory.ini deploy_docker_image.yml
