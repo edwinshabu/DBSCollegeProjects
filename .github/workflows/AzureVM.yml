@@ -68,6 +68,12 @@ jobs:
               Write-Host "Failed to connect to the remote VM."
           }
 
+          cd ..
+          cd HelloWorld
+          docker build -t automation_app:latest .
+          
+          
+
 
 
 
