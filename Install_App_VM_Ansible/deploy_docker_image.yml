@@ -4,22 +4,24 @@
   become: yes
   tasks:
     - name: Copy Docker image to Azure VM
-      copy:
-        src: automation_app.tar              # Path to image on your local machine
+      ansible.builtin.copy:
+        src: ./automation_app.tar  # Replace with the absolute path in the workflow
         dest: /home/azureadmin/automation_app.tar
-        mode: 0644
+        mode: '0644'
 
     - name: Load Docker image on Azure VM
       ansible.builtin.shell: |
-        sudo docker load -i /home/azureadmin/automation_app.tar
+        docker load -i /home/azureadmin/automation_app.tar
       args:
         creates: /home/azureadmin/automation_app.tar
 
     - name: Run Docker container from loaded image
-      ansible.builtin.shell: |
-        sudo docker run -d -p 80:80 automation_app
-      args:
-        creates: /var/run/docker.sock  # Only runs if Docker is installed
+      ansible.builtin.docker_container:
+        name: automation_app
+        image: automation_app:latest
+        state: started
+        published_ports:
+          - "80:80"
 
     - name: Confirm Docker container is running
       ansible.builtin.shell: docker ps
